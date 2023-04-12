@@ -1,0 +1,18 @@
+#include <stdio.h>
+
+int minJumps(int arr[], int n) {
+    int maxReach = arr[0]; // maximum distance reachable from the current index
+    int steps = arr[0]; // number of steps that can be taken from the current index
+    int jumps = 1; // number of jumps taken so far
+
+    for (int i = 1; i < n - 1; i++) {
+        maxReach = (maxReach > i + arr[i]) ? maxReach : i + arr[i]; // update maxReach
+        steps--; // decrement steps
+        if (steps == 0) { // if we have taken all possible steps from the current index
+            jumps++; // make a jump
+            if (maxReach <= i) { // if we cannot reach any further
+                return -1;
+            }
+            steps = maxReach - i; // update steps
+        }
+    }
